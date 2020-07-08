@@ -36,17 +36,18 @@
                     -37.897447085763865 145.31563259791912 weapon.png`;
         var markers = data.split("\n");
         function initMap() {
-                var old_lat_lng = new google.maps.LatLng(-37.8972271, 145.3146511);
-                var old_postion = new google.maps.Marker({
-                    position: old_lat_lng,
-                    map: zombie_map, 
-                    icon: emoji
-                    });
                 zombie_map = new google.maps.Map(document.getElementById('zombie_map'), {
                 zoom: 18,
                 center: {lat: -37.8972271, lng: 145.3146511}
                 });
-
+                
+                var old_lat_lng = new google.maps.LatLng(-37.8972271, 145.3146511);
+                var old_position = new google.maps.Marker({
+                    position: old_lat_lng,
+                    map: zombie_map, 
+                    icon: "me.png"
+                    });
+                
                 if(navigator.geolocation) {
                     navigator.geolocation.watchPosition(set_my_position);
                 }
@@ -70,7 +71,7 @@
                 }
         }
         function set_my_position(position) {
-            old_postion.setMap(null);
+            old_position.setMap(null);
             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
             var marker = new google.maps.Marker({
                         position: pos,
