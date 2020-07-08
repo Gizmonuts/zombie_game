@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-#zombie_map {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    background-color: grey;
-}
-</style>
 <head>
+    <style>
+        #zombie_map {
+            height: 100%;
+            width: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            background-color: grey;
+        }
+    </style>
     <title>Zombie Game</title>
 </head>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGpa9W9_pkGwnHHPNnipzkT1bFWrmAL0&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCGpa9W9_pkGwnHHPNnipzkT1bFWrmAL0&callback=initMap&libraries=geometry">
 </script>
 <body>
     My zombie map
     <div id='zombie_map'></div>
     <script>
         var zombie_map;
+        var score = 0;
+        var tolerance = 5;
         var old_position;
         var all_markers = [];
         var data = `-37.89645172845458 145.31406691070728 weapon.png
@@ -79,6 +81,28 @@
                         icon: "me.png"
         });
             old_position = marker;
+            for(var i=0; i < all_markers.length; i++){
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(pos, all_markers[i].getPosition());
+                if( distance < tolerance ){
+                    var what_is_it = all_markers[i].getIcon();
+                    what_is_it = what_is_it.replace(".png", "");
+                    alert("Found the " + what_is_it );
+                    all_markers[i].setMap(null);
+
+                    if(what_is_it == 'zombie'){
+                        score -= 10;
+                        alert("You were attacked by a Zombie, -10pts")
+                    }
+                    if(what_is_it == 'hospital'){
+                        score += 50;
+                        alert("You made it to safety, +50pts")
+                    }
+                    if(what_is_it == 'weapon'){
+                        score += 20;
+                        alert("You got a weapon, +20pts")
+                    }
+                }
+            }
         }
     </script>
 </body>
