@@ -36,9 +36,12 @@
                     -37.897447085763865 145.31563259791912 weapon.png`;
         var markers = data.split("\n");
         function initMap() {
-                var old_lat_lng = new google.maps.LatLng(-37.8972271, 145.3146511)
+                var old_lat_lng = new google.maps.LatLng(-37.8972271, 145.3146511);
                 var old_postion = new google.maps.Marker({
-                    position: old_lat_lng})
+                    position: old_lat_lng,
+                    map: zombie_map, 
+                    icon: emoji
+                    });
                 zombie_map = new google.maps.Map(document.getElementById('zombie_map'), {
                 zoom: 18,
                 center: {lat: -37.8972271, lng: 145.3146511}
